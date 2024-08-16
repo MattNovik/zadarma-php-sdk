@@ -140,6 +140,8 @@ abstract class Api implements ApiInterface
      */
     protected function prepareParameters($httpMethod, $endpoint, array $parameters = [])
     {
+        $parameters['format'] = 'json';
+        
         $prepared = [
             'headers' => array_merge($parameters['headers'] ?? [], [
                 'Authorization' => $this->getAuthHeader($endpoint, $parameters)
