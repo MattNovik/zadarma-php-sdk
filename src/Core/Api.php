@@ -120,6 +120,8 @@ abstract class Api implements ApiInterface
      */
     public function execute($httpMethod, $url, array $parameters = [])
     {
+        $parameters['format'] = 'json';
+        
         try {
             $endpoint = $this->prefixString($url, '/');
             $response = $this->getClient()->{$httpMethod}($endpoint, $this->prepareParameters($httpMethod, $endpoint, $parameters));
@@ -139,9 +141,7 @@ abstract class Api implements ApiInterface
      * @return array
      */
     protected function prepareParameters($httpMethod, $endpoint, array $parameters = [])
-    {
-        $parameters['format'] = 'json';
-        
+    {        
         $prepared = [
             'headers' => array_merge($parameters['headers'] ?? [], [
                 'Authorization' => $this->getAuthHeader($endpoint, $parameters)
